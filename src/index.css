@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities; /* index.css */
+
+/* Other global styles */
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: bg-gradient-to-r from-blue-50 to-teal-100;
+}
+
+::-webkit-scrollbar-thumb {
+  background: bg-gradient-to-r from-blue-50 to-teal-100;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: lightgray;
+}
+
+/* animations.css */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-15px); /* Adjusted for a more subtle bounce */
+  }
+  60% {
+    transform: translateY(-7px); /* Adjusted for a more subtle bounce */
+  }
+}
+
+@keyframes continuousMovement {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px); /* Adjust this value for movement height */
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes textContinuous {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(
+      -5px
+    ); /* Adjust this value for smooth vertical movement */
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1s ease-out forwards; /* Slowed down the fade-in effect */
+}
+
+.animate-scaleUp {
+  animation: scaleUp 1s ease-out forwards; /* Slowed down the scale-up effect */
+}
+
+.animate-bounce {
+  animation: bounce 1s ease-out; /* Slowed down the bounce effect */
+}
+
+.continuous-movement {
+  animation: continuousMovement 2s ease-in-out infinite; /* Continuous up and down movement */
+}
+
+.animate-textContinuous {
+  animation: textContinuous 2s ease-in-out infinite; /* Continuous smooth vertical movement for text */
+}
