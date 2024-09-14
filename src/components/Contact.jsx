@@ -372,8 +372,12 @@ const Contact = () => {
                     }}
                   >
                     <BsThreeDots
-                      className="hover:text-blue-500 mt-4 opacity-0 hover:opacity-100 transition duration-300"
-                      style={{ fontSize: 20, cursor: "pointer" }} // Added cursor style for better UX
+                      className="hover:text-gray-500 mt-2 opacity-0 hover:opacity-100 transition duration-300 rounded-full p-2"
+                      style={{
+                        fontSize: 36,
+                        cursor: "pointer",
+                        backgroundColor: "rgba(191, 219, 254)",
+                      }} // Rounded full and background color for the icon
                       onClick={() => setOpenDropdown(user.id)} // Assuming you have a function to toggle the dropdown
                     />
                     {openDropdown === user.id && (

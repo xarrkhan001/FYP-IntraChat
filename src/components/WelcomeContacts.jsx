@@ -1,6 +1,6 @@
 import React from "react";
 import { UserGroupIcon } from "@heroicons/react/24/solid";
-import backgroundImg from "../assets/A12.jpg";
+import backgroundImg from "../assets/AG1.jpg";
 
 // Define CSS styles for the smooth bounce animation
 const styles = {

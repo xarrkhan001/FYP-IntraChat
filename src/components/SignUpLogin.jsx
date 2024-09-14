@@ -6,7 +6,7 @@ import "aos/dist/aos.css";
 import backgroundImg from "../assets/is01.jpg"; // Adjust the path based on your project structure
 
 const SignUpLogin = () => {
-  const [isSignUp, setIsSignUp] = useState(false); // true for sign-up, false for login
+  const [isSignUp, setIsSignUp] = useState(true); // true for sign-up, false for login
   const [formData, setFormData] = useState({
     emailOrPhone: "",
     firstName: "",

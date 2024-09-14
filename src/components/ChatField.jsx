@@ -2,13 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { AiOutlineSelect, AiOutlineCopy } from "react-icons/ai";
-import { BsFillChatHeartFill, BsPlusCircle } from "react-icons/bs";
+import { BsPlusCircle } from "react-icons/bs";
 import { FiPhoneCall, FiVideo, FiSend } from "react-icons/fi";
 import { MdPhotoLibrary } from "react-icons/md";
-import { FaRegSmile, FaMicrophone, FaCheck, FaRegClock } from "react-icons/fa";
+import { FaRegSmile, FaMicrophone, FaCheck } from "react-icons/fa";
 import EmojiPicker from "emoji-picker-react";
 import AudioCallScreen from "./AudioCallScreen";
 import VideoCallScreen from "./VideoCallScreen";
+import CustomAudioPlayer from "./CustomAudioPlayer"; // Import the custom audio player
+
+import backgroundImg from "../assets/AG1.jpg";
 
 const ChatField = () => {
   const location = useLocation();
@@ -229,81 +232,89 @@ const ChatField = () => {
           </div>
         </div>
 
+        {/* ChatArea Section  */}
+
         <div
-          className="flex-1 bg-blue-100 overflow-y-auto p-4 sm:p-6"
+          className="flex-1 bg-cover bg-center overflow-y-auto p-4 sm:p-6"
+          style={{ backgroundImage: `url(${backgroundImg})` }}
           ref={chatAreaRef}
         >
           <div className="space-y-4">
             {userMessages[user.id]?.map((msg) => (
               <div
                 key={msg.id}
-                className={`p-2 rounded-md max-w-xs overflow-auto relative ${
+                className={`flex flex-col p-3 rounded-md w-auto max-w-xs overflow-auto relative ${
                   msg.isCall
-                    ? "bg-white shadow-sm text-slate-700 font-medium font-sans"
-                    : msg.audioUrl
-                    ? ""
-                    : "bg-blue-600 shadow-sm text-white text-sm font-medium font-sans"
+                    ? "bg-white shadow-lg text-slate-700"
+                    : "bg-blue-400  text-white" // Default background for non-audio messages
+                } ${
+                  msg.isSent ? "self-end text-right" : "self-start text-left"
                 }`}
                 style={{
                   marginLeft: msg.isSent ? "auto" : "0",
                   marginRight: msg.isSent ? "0" : "auto",
                   textAlign: "left",
                   wordBreak: "break-word",
+                  maxHeight: "120px", // Adjust height for message bubbles
+                  fontFamily: "'Roboto'", // Font styling
+                  fontSize: "14px", // Font size
+                  lineHeight: "1.2", // Line height for readability
+                  backgroundColor: msg.audioUrl ? "transparent" : "", // No background for voice messages
                 }}
                 onContextMenu={(e) => handleContextMenu(e, msg.id)}
               >
-                {msg.text && <div>{msg.text}</div>}
-                {msg.audioUrl && (
-                  <audio
-                    controls
-                    src={msg.audioUrl}
-                    className="mt-1 w-full"
-                  ></audio>
-                )}
-                <div className="absolute bottom-0 left-0 p-1"></div>
-                <div className="text-xs text-gray-700 mt-1 text-right">
-                  {msg.time}
-                </div>
-                <div className="absolute right-1 bottom-1 flex items-center space-x-1">
-                  {msg.isSent ? (
-                    <FaCheck className="text-gray-300 text-xs " />
-                  ) : (
-                    <FaRegClock className="text-gray-300 text-xs" />
+                <div className="flex-1">
+                  {msg.text && <div>{msg.text}</div>}
+                  {msg.audioUrl && (
+                    <div className="mt-1 w-full flex justify-center">
+                      <CustomAudioPlayer src={msg.audioUrl} />
+                    </div>
                   )}
                 </div>
+                {msg.isSent && (
+                  <div className="absolute bottom-2 font-mono right-2 flex items-center text-xs text-gray-600">
+                    <span className="mr-1">{msg.time}</span>{" "}
+                    {/* Time on the left */}
+                    <FaCheck className="text-slate-500 text-xs" />{" "}
+                    {/* Tick mark on the right */}
+                  </div>
+                )}
               </div>
             ))}
           </div>
-        </div>
 
-        {contextMenu && (
-          <div
-            className="fixed z-50 bg-white border border-gray-200 shadow-lg rounded-md"
-            style={{ top: contextMenu.y, left: contextMenu.x }}
-            onClick={handleCloseContextMenu}
-          >
-            <ul className="py-1">
-              <li
-                className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                onClick={() => handleDeleteMessage(contextMenu.messageId)}
-              >
-                <RiDeleteBin6Line className="inline-block mr-2" /> Delete
-              </li>
-              <li
-                className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                onClick={() => console.log("Select clicked")}
-              >
-                <AiOutlineSelect className="inline-block mr-2" /> Select
-              </li>
-              <li
-                className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                onClick={() => console.log("Copy clicked")}
-              >
-                <AiOutlineCopy className="inline-block mr-2" /> Copy
-              </li>
-            </ul>
-          </div>
-        )}
+          {contextMenu && (
+            <div
+              className="fixed z-50 bg-white border border-gray-200 shadow-lg rounded-md"
+              style={{ top: contextMenu.y, left: contextMenu.x }}
+              onClick={handleCloseContextMenu}
+            >
+              <ul className="py-2 px-4">
+                <li
+                  className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer rounded-md transition ease-in-out duration-150"
+                  onClick={() => handleDeleteMessage(contextMenu.messageId)}
+                >
+                  <RiDeleteBin6Line className="inline-block mr-2 text-red-500" />{" "}
+                  Delete
+                </li>
+                <li
+                  className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer rounded-md transition ease-in-out duration-150"
+                  onClick={() => console.log("Select clicked")}
+                >
+                  <AiOutlineSelect className="inline-block mr-2 text-blue-500" />{" "}
+                  Select
+                </li>
+                <li
+                  className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer rounded-md transition ease-in-out duration-150"
+                  onClick={() => console.log("Copy clicked")}
+                >
+                  <AiOutlineCopy className="inline-block mr-2 text-green-500" />{" "}
+                  Copy
+                </li>
+              </ul>
+            </div>
+          )}
+        </div>
 
         <div className="relative flex items-center justify-between p-2 sm:p-4 bg-gray-50 border-t border-gray-200">
           <div className="flex items-center space-x-2">
@@ -366,142 +377,6 @@ const ChatField = () => {
           )}
         </div>
       </div>
-
-      {/* Floating Message Icon */}
-      <div className="fixed bottom-6 right-6 z-50 lg:block hidden">
-        <button
-          className="relative p-3 sm:p-4 bg-blue-100 border-2 border-white text-blue-500 rounded-full shadow-lg"
-          onClick={handleChatCardToggle}
-        >
-          <BsFillChatHeartFill className="text-2xl sm:text-3xl" />
-          {unreadMessagesCount > 0 && (
-            <div className="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-              {unreadMessagesCount}
-            </div>
-          )}
-        </button>
-      </div>
-
-      {/* Sliding Chat Card */}
-      {isChatCardOpen && (
-        <div
-          ref={chatCardRef}
-          className="fixed bottom-0 right-0 w-full sm:w-[360px] border border-t-2 bg-gray-50 rounded-md shadow-lg transform transition-transform duration-300 ease-in-out z-50"
-          style={{
-            transform: isChatCardOpen ? "translateY(0)" : "translateY(100%)",
-          }}
-        >
-          <div className="p-2 sm:p-4 border-b border-gray-200 flex items-center justify-between">
-            <div className="flex items-center">
-              <img
-                src={user.profilePic}
-                alt={user.name}
-                className="w-8 h-8 rounded-md"
-              />
-              <div className="ml-2">
-                <h2 className="text-xs sm:text-sm text-gray-500 font-semibold">
-                  {user.name}
-                </h2>
-                <div className="text-xs text-gray-500">Active</div>
-              </div>
-            </div>
-            <div className="flex space-x-2 sm:space-x-4 ml-12 sm:ml-16">
-              <button
-                className="p-2 bg-gray-200 rounded-md hover:bg-blue-100"
-                onClick={handleAudioCall}
-              >
-                <FiPhoneCall className="text-lg sm:text-lg text-gray-700" />
-              </button>
-              <button
-                className="p-2 bg-gray-200 rounded-md hover:bg-blue-100"
-                onClick={handleVideoCall}
-              >
-                <FiVideo className="text-lg sm:text-lg text-gray-700" />
-              </button>
-            </div>
-            <button
-              className="text-xl text-gray-700 mb-2"
-              onClick={() => setIsChatCardOpen(false)}
-            >
-              &times;
-            </button>
-          </div>
-          <div className="p-2 sm:p-4 h-64 overflow-y-auto">
-            <div className="space-y-4">
-              {userMessages[user.id]?.map((msg) => (
-                <div
-                  key={msg.id}
-                  className={`p-2 rounded-md max-w-xs overflow-auto relative ${
-                    msg.isCall
-                      ? "bg-white shadow-sm text-slate-700 font-medium font-sans"
-                      : msg.audioUrl
-                      ? ""
-                      : "bg-blue-600 shadow-sm text-white text-sm font-medium font-sans"
-                  }`}
-                  style={{
-                    marginLeft: msg.isSent ? "auto" : "0",
-                    marginRight: msg.isSent ? "0" : "auto",
-                    textAlign: "left",
-                    wordBreak: "break-word",
-                  }}
-                >
-                  {msg.text && <div>{msg.text}</div>}
-                  {msg.audioUrl && (
-                    <audio
-                      controls
-                      src={msg.audioUrl}
-                      className="mt-1 w-full"
-                    ></audio>
-                  )}
-                  <div className="absolute bottom-0 left-0 p-1"></div>
-                  <div className="text-xs text-gray-700 mt-1 text-right">
-                    {msg.time}
-                  </div>
-                  <div className="absolute right-1 bottom-1 flex items-center space-x-1">
-                    {msg.isSent ? (
-                      <FaCheck className="text-gray-300 text-xs" />
-                    ) : (
-                      <FaRegClock className="text-gray-300 text-xs" />
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="p-2 sm:p-4 border-t border-gray-200 flex items-center">
-            <input
-              type="text"
-              className="flex-1 py-2 px-3 sm:py-2 sm:px-4 bg-gray-200 rounded-md focus:outline-none focus:border-blue-500"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Type a message..."
-            />
-            <button
-              className="text-xl sm:text-2xl text-blue-500 ml-2"
-              onClick={handleSendMessage}
-            >
-              <FiSend />
-            </button>
-
-            {isRecording ? (
-              <button
-                className="text-xl sm:text-2xl text-red-600 ml-2"
-                onClick={stopRecording}
-              >
-                <FaMicrophone />
-              </button>
-            ) : (
-              <button
-                className="text-xl sm:text-2xl text-gray-700 ml-2"
-                onClick={startRecording}
-              >
-                <FaMicrophone />
-              </button>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 };

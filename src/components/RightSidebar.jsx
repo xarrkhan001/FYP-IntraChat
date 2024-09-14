@@ -212,26 +212,26 @@ const RightSidebar = () => {
       <div className="flex flex-row justify-center space-x-4 p-2 mt-1">
         <button
           className={`flex flex-col items-center justify-center h-20 w-24 rounded-md ${
-            isMuted ? "bg-red-500" : "bg-gray-300"
+            isMuted ? "bg-red-400" : "bg-blue-100"
           } text-white transition duration-300`}
           onClick={toggleMute}
         >
-          <AiOutlineSound className="text-2xl mb-1 text-gray-600" />
-          <span className="text-xs text-gray-600">Mute</span>
+          <AiOutlineSound className="text-2xl mb-1 text-slate-600" />
+          <span className="text-xs text-slate-600">Mute</span>
         </button>
         <button
-          className="flex flex-col items-center justify-center h-20 w-24 rounded-md bg-gray-300 text-white transition duration-300"
+          className="flex flex-col items-center justify-center h-20 w-24 rounded-md bg-blue-100 text-white transition duration-300"
           onClick={() => handleMediaClick("images")}
         >
-          <AiOutlinePicture className="text-2xl mb-1 text-gray-600" />
-          <span className="text-xs text-gray-600">Media</span>
+          <AiOutlinePicture className="text-2xl mb-1 text-slate-600" />
+          <span className="text-xs text-slate-600">Media</span>
         </button>
         <button
-          className="flex flex-col items-center justify-center h-20 w-24 rounded-md bg-gray-300 text-white transition duration-300"
+          className="flex flex-col items-center justify-center h-20 w-24 rounded-md bg-blue-100 text-white transition duration-300"
           onClick={toggleOptionsModal}
         >
-          <AiOutlineSetting className="text-2xl mb-1 text-gray-600" />
-          <span className="text-xs text-gray-600">Options</span>
+          <AiOutlineSetting className="text-2xl mb-1 text-slate-600" />
+          <span className="text-xs text-slate-600">Options</span>
         </button>
       </div>
 

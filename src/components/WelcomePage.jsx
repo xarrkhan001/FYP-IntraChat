@@ -1,6 +1,6 @@
 import React from "react";
 import { SiGooglechat } from "react-icons/si";
-import backgroundImg from "../assets/A12.jpg"; // Adjust the path as needed
+import backgroundImg from "../assets/AG1.jpg"; // Adjust the path as needed
 
 // Define CSS styles for the smooth bounce animation
 const styles = {

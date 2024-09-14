@@ -1,30 +1,44 @@
+// src/components/ProfileDetail.js
 import React, { useState, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { Outlet } from "react-router-dom";
+import { FaCamera } from "react-icons/fa"; // Import an icon for changing images
 import profile1 from "../assets/img1.jpg";
 import background1 from "../assets/pic1.jpg";
-import {
-  FaFacebook,
-  FaTwitter,
-  FaInstagram,
-  FaBirthdayCake,
-  FaGenderless,
-  FaPhoneAlt,
-  FaEnvelope,
-} from "react-icons/fa";
+import IntroSection from "./IntroSection";
+import EditProfileSection from "./EditProfileSection";
+import ChangePasswordSection from "./ChangePasswordSection";
 
 const ProfileDetail = () => {
   const [selectedOption, setSelectedOption] = useState("intro");
+  const [profilePic, setProfilePic] = useState(profile1);
+  const [backgroundImage, setBackgroundImage] = useState(background1);
 
   useEffect(() => {
     AOS.init({ duration: 1000 }); // Initialize AOS for animations
   }, []);
 
+  const handleImageChange = (e, type) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (type === "profile") {
+          setProfilePic(reader.result);
+        } else if (type === "background") {
+          setBackgroundImage(reader.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const user = {
     name: "John Doe",
     username: "@john_doe",
-    profilePic: profile1,
-    backgroundImage: background1,
+    profilePic: profilePic,
+    backgroundImage: backgroundImage,
     email: "john.doe@example.com",
     phoneNumber: "+1234567890",
     country: "United States",
@@ -48,202 +62,11 @@ const ProfileDetail = () => {
   const renderContent = () => {
     switch (selectedOption) {
       case "intro":
-        return (
-          <div className="p-6 bg-white shadow-md rounded-lg">
-            <div data-aos="fade-up">
-              <h4 className="text-2xl font-bold mb-6 text-gray-700">
-                About <span className="text-gray-500 text-lg">{user.name}</span>
-              </h4>
-              <div className="flex space-x-4 mb-6">
-                {Object.entries(user.socialLinks).map(([key, url]) => {
-                  const iconMap = {
-                    facebook: <FaFacebook className="text-blue-600 text-xl" />,
-                    twitter: <FaTwitter className="text-blue-400 text-xl" />,
-                    instagram: (
-                      <FaInstagram className="text-pink-500 text-xl" />
-                    ),
-                  };
-                  return (
-                    <a
-                      key={key}
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 bg-gray-200 rounded-full"
-                      aria-label={`Visit ${key}`}
-                    >
-                      {iconMap[key]}
-                    </a>
-                  );
-                })}
-              </div>
-              <div>
-                <h4 className="text-lg font-semibold mb-2 text-gray-700">
-                  Basic Info
-                </h4>
-                <div className="text-gray-600">
-                  {[
-                    {
-                      icon: (
-                        <FaBirthdayCake className="text-gray-500 mr-2 text-lg" />
-                      ),
-                      label: "Birthday",
-                      value: user.birthday,
-                    },
-                    {
-                      icon: (
-                        <FaGenderless className="text-gray-500 mr-2 text-lg" />
-                      ),
-                      label: "Gender",
-                      value: user.gender,
-                    },
-                    {
-                      icon: (
-                        <FaPhoneAlt className="text-gray-500 mr-2 text-lg" />
-                      ),
-                      label: "Phone Number",
-                      value: user.phoneNumber,
-                    },
-                    {
-                      icon: (
-                        <FaEnvelope className="text-gray-500 mr-2 text-lg" />
-                      ),
-                      label: "Email",
-                      value: user.email,
-                    },
-                  ].map(({ icon, label, value }) => (
-                    <div className="flex items-center mb-3" key={label}>
-                      {icon}
-                      <p className="ml-2">
-                        <strong>{label}:</strong> {value}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        );
+        return <IntroSection user={user} />;
       case "editProfile":
-        return (
-          <div className="p-6 bg-white shadow-md rounded-lg" data-aos="fade-up">
-            <h3 className="text-2xl font-semibold mb-4 text-gray-700">
-              Edit Profile
-            </h3>
-            <form>
-              <div className="mb-6">
-                <h4 className="text-lg font-semibold mb-2">
-                  Personal Information
-                </h4>
-                <div className="flex space-x-4 mb-4">
-                  <div className="w-full lg:w-1/2">
-                    <label className="block text-gray-700 mb-1">
-                      First Name
-                    </label>
-                    <input
-                      type="text"
-                      defaultValue={user.name.split(" ")[0]}
-                      className="p-3 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      aria-label="First Name"
-                    />
-                  </div>
-                  <div className="w-full lg:w-1/2">
-                    <label className="block text-gray-700 mb-1">
-                      Last Name
-                    </label>
-                    <input
-                      type="text"
-                      defaultValue={user.name.split(" ")[1] || ""}
-                      className="p-3 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      aria-label="Last Name"
-                    />
-                  </div>
-                </div>
-                <div className="mb-4" data-aos="fade-up">
-                  <label className="block text-gray-700 mb-1">Main Email</label>
-                  <div className="flex items-center">
-                    <input
-                      type="email"
-                      defaultValue={user.email}
-                      className="p-3 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      aria-label="Main Email"
-                    />
-                    <span className="text-green-500 text-sm ml-2">
-                      Verified Email
-                    </span>
-                  </div>
-                </div>
-                <div className="mb-4" data-aos="fade-up">
-                  <label className="block text-gray-700 mb-1">
-                    Phone Number
-                  </label>
-                  <input
-                    type="text"
-                    defaultValue={user.phoneNumber}
-                    className="p-3 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    aria-label="Phone Number"
-                  />
-                </div>
-                <div className="mb-4" data-aos="fade-up">
-                  <label className="block text-gray-700 mb-1">Country</label>
-                  <select
-                    defaultValue={user.country}
-                    className="p-3 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    aria-label="Country"
-                  >
-                    {countries.map((country, index) => (
-                      <option key={index} value={country}>
-                        {country}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-              <div className="flex justify-start">
-                <button
-                  type="submit"
-                  className="bg-blue-400 text-white px-6 py-3 rounded shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  aria-label="Save Changes"
-                >
-                  Save Changes
-                </button>
-              </div>
-            </form>
-          </div>
-        );
+        return <EditProfileSection user={user} countries={countries} />;
       case "changePassword":
-        return (
-          <div className="p-6 bg-white shadow-md rounded-lg" data-aos="fade-up">
-            <h3 className="text-2xl font-semibold mb-4 text-gray-700">
-              Change Password
-            </h3>
-            <form>
-              {[
-                { label: "Current Password", type: "password" },
-                { label: "New Password", type: "password" },
-                { label: "Confirm New Password", type: "password" },
-              ].map(({ label, type }) => (
-                <div className="mb-4" key={label} data-aos="fade-up">
-                  <label className="block text-gray-700 mb-1">{label}</label>
-                  <input
-                    type={type}
-                    className="p-3 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    aria-label={label}
-                  />
-                </div>
-              ))}
-              <div className="flex justify-start">
-                <button
-                  type="submit"
-                  className="bg-blue-400 text-white px-6 py-3 rounded shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  aria-label="Change Password"
-                >
-                  Change Password
-                </button>
-              </div>
-            </form>
-          </div>
-        );
+        return <ChangePasswordSection />;
       default:
         return (
           <div className="p-6 bg-white shadow-md rounded-lg">
@@ -264,13 +87,38 @@ const ProfileDetail = () => {
           backgroundPosition: "center",
         }}
       >
+        <label
+          className="absolute top-4 right-4 cursor-pointer"
+          title="Change Background"
+        >
+          <input
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => handleImageChange(e, "background")}
+          />
+          <FaCamera className="text-white text-3xl bg-gray-700 p-2 rounded-full" />
+        </label>
+
         <div className="absolute top-1/2 transform -translate-y-1/4 mt-[260px] w-full flex items-start px-4 lg:px-16">
-          <div className="flex items-center space-x-4">
+          <div className="relative flex items-center space-x-4">
             <img
               src={user.profilePic}
               alt="Profile"
               className="w-32 h-32 rounded-md border-4 border-white shadow-lg"
             />
+            <label
+              className="absolute top-0 right-0 cursor-pointer"
+              title="Change Profile Picture"
+            >
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => handleImageChange(e, "profile")}
+              />
+              <FaCamera className="text-white text-2xl bg-gray-700 p-1 rounded-full absolute top-[100px] right-[115px]" />
+            </label>
             <div className="flex flex-col items-start">
               <h2 className="text-2xl font-semibold text-gray-700">
                 {user.name}
@@ -311,6 +159,7 @@ const ProfileDetail = () => {
         {/* Content Display */}
         <div className="flex flex-col space-y-6">{renderContent()}</div>
       </div>
+      <Outlet />
     </div>
   );
 };

@@ -10,6 +10,7 @@ import ProfileDetail from "./components/ProfileDetail";
 import WelcomePage from "./components/WelcomePage"; // Import the WelcomePage component
 import WelcomeContacts from "./components/WelcomeContacts";
 import WelcomeStories from "./components/WelcomeStories";
+import EditProfileSection from "./components/EditProfileSection";
 
 const App = () => {
   const location = useLocation();
@@ -61,6 +62,7 @@ const App = () => {
             />
 
             <Route path="/profile" element={<ProfileDetail />} />
+            <Route path="/settings" element={<EditProfileSection />} />
           </Routes>
         </div>
       </div>

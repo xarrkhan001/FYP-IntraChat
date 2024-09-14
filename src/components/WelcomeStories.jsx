@@ -1,6 +1,6 @@
 import React from "react";
 import { MdWebStories } from "react-icons/md";
-import backgroundImg from "../assets/A12.jpg"; // Adjust the path as needed
+import backgroundImg from "../assets/AG1.jpg";
 
 // Define CSS styles for the smooth bounce animation
 const styles = {

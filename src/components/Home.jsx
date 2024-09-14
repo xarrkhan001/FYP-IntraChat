@@ -284,8 +284,13 @@ const Home = () => {
                     }}
                   >
                     <BsThreeDots
-                      className="hover:text-blue-500 mt-4 opacity-0 hover:opacity-100 transition duration-300"
-                      style={{ fontSize: 20 }}
+                      className="hover:text-gray-500 mt-2 opacity-0 hover:opacity-100 transition duration-300"
+                      style={{
+                        fontSize: 36,
+                        borderRadius: "50%",
+                        padding: "4px",
+                        backgroundColor: "rgba(191, 219, 254)",
+                      }}
                     />
                     {openDropdown === user.id && (
                       <div className="absolute right-0 w-48 bg-white mt-11 text-gray-500 rounded-lg shadow-lg py-1 z-10">
