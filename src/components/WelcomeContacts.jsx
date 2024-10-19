@@ -25,7 +25,7 @@ const WelcomeContacts = () => {
         backgroundAttachment: "fixed", // Fix the background
         backgroundRepeat: "no-repeat", // Prevent repeating the image
       }}
-      className="flex flex-col items-center justify-center h-[700px] p-6"
+      className="flex flex-col items-center justify-center w-[1250px] h-[700px] p-6"
     >
       <UserGroupIcon
         style={styles.bounce} // Apply bounce animation

@@ -77,7 +77,7 @@ const ProfileDetail = () => {
   };
 
   return (
-    <div className="flex flex-col items-center w-full bg-blue-100">
+    <div className="flex flex-col items-center w-[1600px] bg-blue-100">
       {/* Profile Header */}
       <div
         className="relative flex items-center justify-center w-full lg:w-[1200px] h-[500px] rounded-t-md mt-9"

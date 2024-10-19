@@ -102,7 +102,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-50 p-2 sm:p-3 border-t w-full border-b border-blue-200">
+    <nav className="bg-gray-50 p-2 sm:p-3 border-t w-[1600px] border-b border-blue-200">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-2 sm:space-x-4 md:space-x-6 lg:space-x-8">
           <div className="text-blue-400 text-xl sm:text-2xl md:text-3xl lg:text-4xl">

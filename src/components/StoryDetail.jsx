@@ -115,7 +115,7 @@ const StoryDetail = () => {
   const currentStory = stories[currentIndex] || {};
 
   return (
-    <div className="w-full h-[700px] bg-blue-50 flex flex-col relative">
+    <div className="min-w-[1250px] h-[700px] bg-blue-50 flex flex-col relative">
       {/* User Profile Section */}
       <div className="absolute top-4 left-4 flex items-center space-x-3 ">
         <img

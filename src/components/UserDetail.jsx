@@ -154,7 +154,7 @@ const UserDetail = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-[700px] bg-blue-100 overflow-y-auto relative">
+    <div className="flex flex-col items-center justify-center min-w-[1250px] h-[700px] bg-blue-100 overflow-y-auto relative">
       {/* Background Image Container */}
       <div
         className={`flex items-center justify-center w-full h-[500px] rounded-t-md relative mt-9 ${

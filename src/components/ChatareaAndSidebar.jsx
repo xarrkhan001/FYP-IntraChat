@@ -6,7 +6,7 @@ import RightSidebar from "./RightSidebar";
 const ChatareaAndSidebar = () => {
   const location = useLocation();
   return (
-    <div className="flex w-full h-full">
+    <div className="flex min-w-[1250px] h-full">
       {/* ChatField is shown on all screen sizes */}
       <div className="flex-1">
         <ChatField />
